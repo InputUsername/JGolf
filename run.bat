@@ -1,1 +1,1 @@
-java -cp out/Production/JGolf com.inputusername.jgolf.Main
+java -cp out/Production/JGolf com.inputusername.jgolf.Main %*
