@@ -5,17 +5,16 @@ import java.util.Scanner;
 
 public class Main {
 	public static void main(String[] args) {
-		Stack stack = new Stack();
-        Namespace variables = new Namespace();
-        StringBuilder output = new StringBuilder();
+	    Scanner s = new Scanner(System.in);
 
-        Interpreter interpreter = new Interpreter(stack, variables, output);
+        System.out.print("code: ");
+        String c = s.nextLine();
 
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Insert GS code> ");
-
-        interpreter.interpret(scanner.nextLine());
-
-        System.out.println(output.toString());
+        if (args[0].equals("-t")) {
+            List<Token> ts = Tokenizer.tokenize(c);
+            for (Token t : ts) {
+                System.out.println(t.toString());
+            }
+        }
 	}
 }
