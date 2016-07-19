@@ -8,17 +8,11 @@ import java.util.List;
  * Created by Koen on 4-7-2016.
  */
 public class Interpreter {
-    private Stack stack;
-    private Namespace variables;
-    private StringBuilder output;
+    private Stack stack = new Stack();
+    private Namespace variables = new Namespace();
+    private StringBuilder output = new StringBuilder();
 
-    public Interpreter(Stack stack, Namespace variables, StringBuilder output) {
-        this.stack = stack;
-        this.variables = variables;
-        this.output = output;
-    }
-
-    private void interpretString(String code) throws RuntimeException {
+    public void interpretString(String code) throws RuntimeException {
         List<Token> tokens = Tokenizer.tokenize(code);
         int tokenCount = tokens.size();
 
@@ -27,11 +21,13 @@ public class Interpreter {
             String tokenString = token.getTokenString();
             Token.Type tokenType = token.getTokenType();
 
+            // Skip comments
             if (tokenType == Token.Type.COMMENT) {
                 continue;
             }
 
-            if (tokenString.equals(":")) {
+            // Handle assignments
+            if (tokenType == Token.Type.ASSIGN) {
                 if (i != tokenCount - 1) {
                     Token nextToken = tokens.get(i + 1);
                     Token.Type nextTokenType = nextToken.getTokenType();
@@ -40,7 +36,7 @@ public class Interpreter {
                         case BLOCK:
                         case STRING:
                         case COMMENT:
-                        case OTHER:
+                        case ASSIGN:
                             throw new AssignmentException("Cannot assign to " + nextTokenType.toString());
                     }
 
@@ -54,6 +50,7 @@ public class Interpreter {
                 continue;
             }
 
+            // Check assigned variables
             if (variables.containsKey(tokenString)) {
                 GSObject object = variables.get(tokenString);
 
@@ -71,6 +68,7 @@ public class Interpreter {
                 }
             }
 
+            // Evaluate other tokens
             switch (tokenType) {
                 case NUMBER:
                     int number = Integer.parseInt(tokenString);
@@ -87,8 +85,7 @@ public class Interpreter {
                 case WORD:
                 case OTHER:
                     if (BuiltIns.exists(tokenString)) {
-                        output.append("[builtin called: " + tokenString + "]");
-                        //TODO: built-in functions
+                        BuiltIns.execute(tokenString, this, stack, variables, output);
                     }
                     break;
             }

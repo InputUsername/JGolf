@@ -9,8 +9,8 @@ import java.util.List;
 /**
  * Created by Koen on 4-7-2016.
  */
-class Util {
-    static boolean truthValue(GSObject object) {
+public class Util {
+    public static boolean truthValue(GSObject object) {
         if (object instanceof GSString) {
             // either GSString or GSBlock
 

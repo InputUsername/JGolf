@@ -10,6 +10,7 @@ class Token {
         BLOCK,
         STRING,
         COMMENT,
+        ASSIGN,
         OTHER
     }
 

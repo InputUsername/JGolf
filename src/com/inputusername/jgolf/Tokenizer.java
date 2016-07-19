@@ -52,11 +52,18 @@ class Tokenizer {
                 do {
                     i++;
                     if (i == code.length()) {
+                        builder.append(startChar);
                         break;
                     }
                     c = code.charAt(i);
 
                     if (c == '\\') {
+                        if (i == code.length() - 1) {
+                            builder.append('\\');
+                            builder.append(startChar);
+                            break;
+                        }
+
                         char escape = code.charAt(i + 1);
                         switch (escape) {
                             case '0': builder.append('\0'); break;
@@ -77,8 +84,6 @@ class Tokenizer {
 
                 Token token = new Token(builder.toString(), Token.Type.STRING);
                 tokens.add(token);
-
-                i--;
 
                 Log.p("string token: " + token.getTokenString());
             }
@@ -110,8 +115,6 @@ class Tokenizer {
 
                 Token token = new Token(builder.toString(), Token.Type.BLOCK);
                 tokens.add(token);
-
-                i--;
 
                 Log.p("block token: " + token.getTokenString());
             }
@@ -150,7 +153,13 @@ class Tokenizer {
                 Token token = new Token(code.substring(start, i), Token.Type.WORD);
                 tokens.add(token);
 
+                i--;
+
                 Log.p("word token: " + token.getTokenString());
+            }
+            else if (c == ':') {
+                Token token = new Token(":", Token.Type.ASSIGN);
+                tokens.add(token);
             }
             else {
                 // Other
