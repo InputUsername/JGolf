@@ -10,8 +10,14 @@ public class Main {
         System.out.print("code: ");
         String c = s.nextLine();
 
-        if (args[0].equals("-t")) {
+        if (args[0].equals("-i")) {
+            Interpreter interpreter = new Interpreter();
+        }
+        else if (args[0].equals("-t")) {
             List<Token> ts = Tokenizer.tokenize(c);
+
+            System.out.println("--- Token list dump ---");
+
             for (Token t : ts) {
                 System.out.println(t.toString());
             }
