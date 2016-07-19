@@ -18,8 +18,8 @@ class BuiltIns {
         builtIns.put("!", new ExclamationMark());
         builtIns.put("@", new AtSign());
         builtIns.put("$", new DollarSign());
-                "+",
-                "-",
+        builtIns.put("+", new Plus());
+        /*"-",
                 "*",
                 "/",
                 "%",
