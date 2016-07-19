@@ -8,9 +8,6 @@ import java.util.logging.Logger;
  * Created by Koen on 3-7-2016.
  */
 
-//TODO: fix nested blocks
-//TODO: support escaped strings
-
 class Tokenizer {
     static List<Token> tokenize(String code) {
         List<Token> tokens = new ArrayList<>();

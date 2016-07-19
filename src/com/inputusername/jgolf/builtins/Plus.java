@@ -10,6 +10,6 @@ import com.inputusername.jgolf.Stack;
 public class Plus implements BuiltInFunction {
     @Override
     public void execute(Interpreter interpreter, Stack stack, Namespace variables, StringBuilder output) {
-
+        //TODO: + function
     }
 }
