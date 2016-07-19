@@ -115,8 +115,14 @@ class Tokenizer {
 
                 Log.p("block token: " + token.getTokenString());
             }
-            else if (Character.isDigit(c)) {
+            else if (c == '-' || Character.isDigit(c)) {
                 // Numbers
+
+                boolean negative = (c == '-');
+                if (negative) {
+                    i++;
+                    //TODO: string end check for negative numbers
+                }
 
                 int start = i;
 
@@ -126,6 +132,9 @@ class Tokenizer {
                         break;
                     }
                 } while (Character.isDigit(code.charAt(i)));
+
+                String numberString = code.substring(start, i);
+                //TODO: parse number string (including negative sign)
 
                 Token token = new Token(code.substring(start, i), Token.Type.NUMBER);
                 tokens.add(token);
